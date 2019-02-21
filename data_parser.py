@@ -45,7 +45,7 @@ class DataParser():
     # print(processed_df);
 
     # Save out DF to csv
-    processed_df.to_csv(os.path.join('Dataset', 'split_dataset.csv'))
+    processed_df.to_csv(os.path.join('Dataset', 'split_dataset.csv'), index=False)
 
     return processed_df
 
