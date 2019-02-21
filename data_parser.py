@@ -1,4 +1,5 @@
 import pandas as pd
+import preprocessor as p
 
 class DataParser():
 	def __init__(self, csv_file):
@@ -45,24 +46,41 @@ class DataParser():
 
 		return processed_df;
 
-
-
-	def create_datapoints(self):
-
-		return;
-
 	# segment posts and append to row_list
 	def segment_posts(self, posts, personality):
 		post_split = posts.split("|||");
 		for post in post_split:
+			# Preprocess the tweets
+			post = p.tokenize(post);
+			post = self.post_process(post);
+
+			# append to row list
 			one_personality_one_post = {'type':personality, 'post':post};
 			self.row_list.append(one_personality_one_post);
 		return;
+
+	# post process the preprocess string
+	def post_process(self, preprocessed_post):
+		new_str = [];
+		for word in preprocessed_post.split():
+			if word.startswith('$') and word.endswith('$'):
+				word = '<' + word[1:len(word)-1] + '>';
+			new_str.append(word);
+		new_str = " ".join(new_str);
+		return new_str;
+
+	def post_process_regex(self):
+		
+		return
+
 
 if __name__ == "__main__":
 	dataset = "./Dataset/mbti_1.csv";
 	dp = DataParser(dataset);
 
 	one_p_one_post_df = dp.process_csv();
-	print(one_p_one_post_df)
+	print(one_p_one_post_df);
+
+	# Save the new processed df to csv
+	one_p_one_post_df.to_csv('./Dataset/clean_mbti.csv', sep='\t', encoding='utf-8');
 
