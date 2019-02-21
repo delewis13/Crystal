@@ -1,0 +1,11 @@
+.action-button {
+  padding: 1.5em 0.5em;
+  margin: 0.25em;
+  border-radius: 2em;
+  width: 18em;
+}
+
+.action-button[disabled] {
+  background-color: grey;
+  border: 1px solid black;
+}

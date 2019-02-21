@@ -2,10 +2,15 @@
   margin: 1em;
   height: 3em;
   width: 3em;
+  cursor: pointer;
   transition: all 0.2s ease-in-out;
+  filter: grayscale(100);
+}
+
+.flex-icon:hover {
+  transform: scale(1.2);
 }
 
 .flex-icon-focus {
-  animation: scale(1.1);
-  border: 1px solid blue; 
+  filter: grayscale(0);
 }

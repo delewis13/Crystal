@@ -27,8 +27,27 @@ export default class ActionButton extends Component {
       }
     }
 
+  componentDidMount() {
+    this.refs.actionButton.disabled = true;
+  }
+
+  componentDidUpdate() {
+    console.log('hi')
+    console.log(this.props.socialMedia)
+    if (this.props.socialMedia) {
+      this.refs.actionButton.disabled = false;
+    } else if (!this.props.socialMedia) {
+      this.refs.actionButton.disabled = true
+    }
+  }
+
   render() {
     let fbContent;
+    return (
+      <Button className="action-button" id="action-button" ref="actionButton" onClick={this.handleClick()}>Choose a platform</Button>
+    )
+  }
+}
 
     if(this.state.isLoggedIn){
       fbContent = null;
