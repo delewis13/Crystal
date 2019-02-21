@@ -1,0 +1,47 @@
+{
+  "name": "crystal-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
+    "eslint-plugin-react": "7.11.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.2",
+    "react-bootstrap": "^1.0.0-beta.5",
+    "react-dom": "^16.8.2",
+    "react-facebook-login": "^4.1.1",
+    "react-modal": "^3.8.1",
+    "react-redux": "^6.0.1",
+    "react-scripts": "2.1.5",
+    "request": "^2.88.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@storybook/addon-actions": "^4.1.12",
+    "@storybook/addon-links": "^4.1.12",
+    "@storybook/addon-storyshots": "^4.1.12",
+    "@storybook/addons": "^4.1.12",
+    "@storybook/react": "^4.1.12",
+    "babel-loader": "^8.0.5",
+    "react-test-renderer": "^16.8.2",
+    "require-context.macro": "^1.0.4"
+  }
+}
