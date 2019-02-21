@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oauth-io/0.6.2/oauth.js"></script>
+<title>Twitter Integration</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<div>
+<button id="loginBtn">Twitter Login</button>
+</div>
+</br>
+<div id="response"></div>
+<script src="https://cdn.jsdelivr.net/npm/codebird@2.6.0/codebird.min.js"></script>
+<script>
+var cb = new Codebird;
+cb.setConsumerKey("aBO62GT6jNXYbsC5IJDAXXiM2", "FXQRiLeoOTSYU9IDgv6q0t8JexRDrkCTEsMuRy1RlfO0WZW5eG");
+cb.setToken("561069478-grpudfT8gJY63Bz8LAS230eWQeihjX0A95ozVaQF", "rp9kUo5udQykul5lf4ZNqC5eSCW06XezCxqLXsLRdZx3F");
+
+var params = {
+  screen_name: "realDonaldTrump"
+};
+cb.__call("users_show", params, function(reply, rate, err) {
+  console.log(reply)
+});
+
+</script>
+</body>
+</html>
