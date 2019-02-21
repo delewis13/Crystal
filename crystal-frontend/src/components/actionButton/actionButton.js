@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import store from '../../store/configureStore';
 import './actionButton.css';
 import { Button } from 'react-bootstrap';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
-export default class ActionButton extends Component {
+class ActionButton extends Component {
   state = {
     isLoggedIn: false,
     userId: ' ',
@@ -32,8 +32,6 @@ export default class ActionButton extends Component {
   }
 
   componentDidUpdate() {
-    console.log('hi')
-    console.log(this.props.socialMedia)
     if (this.props.socialMedia) {
       this.refs.actionButton.disabled = false;
     } else if (!this.props.socialMedia) {
@@ -41,31 +39,40 @@ export default class ActionButton extends Component {
     }
   }
 
-  render() {
-    let fbContent;
-    return (
-      <Button className="action-button" id="action-button" ref="actionButton" onClick={this.handleClick()}>Choose a platform</Button>
-    )
+  buttonContent() {
+    let content;
+    if (this.props.socialMedia !== "") {
+      if (this.props.socialMedia === 'facebook') {
+        if (this.state.isLoggedIn) {
+          content = <div>Please log in to facebook externally</div>;
+        } else {
+          content = (
+            <FacebookLogin
+            appId="375886966477417"
+            autoLoad={true}
+            fields="name,email,feed"
+            onClick={this.componentClicked}
+            callback={this.responseFacebook}
+            render={renderProps => (
+              <div onClick={renderProps.onClick}>Facebook</div>
+            )}
+            />
+          )
+        }
+      } else if (this.props.socialMedia === 'twitter') {
+        content = (<div>Twitter</div>)
+      }
+    } else if (this.props.socialMedia === "") {
+    content = (<div>Select a platform</div>)
   }
+  return content
 }
 
-    if(this.state.isLoggedIn){
-      fbContent = null;
-    } else {
-      fbContent = (
-    <FacebookLogin
-    appId="375886966477417"
-    autoLoad={true}
-    fields="name,email,feed"
-    onClick={this.componentClicked}
-    callback={this.responseFacebook}
-    />
-);
-
-    }
+  render() {
       return (
-        <div>{fbContent}</div>
-        // <Button onClick={this.handleClick()}/>
+        <Button className="action-button" id="action-button" ref="actionButton">
+          {this.buttonContent()}
+        </Button>
       )
     }
   }
@@ -85,10 +92,10 @@ export default class ActionButton extends Component {
 //   }
 // }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     socialMedia: state.socialMedia
-//   }
-// }
-//
-// export default connect(mapStateToProps)(ActionButton)
+const mapStateToProps = (state) => {
+  return {
+    socialMedia: state.user.socialMedia
+  }
+}
+
+export default connect(mapStateToProps)(ActionButton)

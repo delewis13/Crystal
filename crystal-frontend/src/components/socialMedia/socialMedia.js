@@ -7,6 +7,10 @@ import { changeSocialMedia } from '../../actions/user'
 
 class SocialMedia extends Component {
 
+  componentDidMount() {
+    this.props.dispatch(changeSocialMedia(""))
+  }
+
   handleClick = (e) => {
     // Add the appropriate highlight classes
     let facebook = document.getElementById('facebook')
@@ -41,7 +45,7 @@ class SocialMedia extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    socialMedia: state.socialMedia
+    socialMedia: state.user.socialMedia
   }
 }
 

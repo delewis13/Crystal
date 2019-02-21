@@ -1,6 +1,8 @@
 // Expenses Reducer
 
-const usersDefaultState = []
+const usersDefaultState = {
+  socialMedia: ""
+}
 
 export default (state = usersDefaultState, action) => {
   console.log('Within user reducer')
