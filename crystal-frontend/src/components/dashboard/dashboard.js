@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../../store/configureStore';
 import './dashboard.css';
+import 'bootstrap/dist/css/bootstrap.css'
+import { Container } from 'react-bootstrap'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -26,9 +28,11 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="flex">
-        {this.createGrid()}
-      </div>
+      <Container>
+        <div className="flex">
+          {this.createGrid()}
+        </div>
+      </Container>
     )
   }
 }

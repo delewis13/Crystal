@@ -1,0 +1,11 @@
+.flex-icon {
+  margin: 1em;
+  height: 3em;
+  width: 3em;
+  transition: all 0.2s ease-in-out;
+}
+
+.flex-icon-focus {
+  animation: scale(1.1);
+  border: 1px solid blue; 
+}

@@ -1,32 +1,15 @@
-
 // Expenses Reducer
 
-const expensesReducerDefaultState = []
+const usersDefaultState = []
 
-export default (state = expensesReducerDefaultState, action) => {
+export default (state = usersDefaultState, action) => {
+  console.log('Within user reducer')
   switch (action.type) {
-    case 'ADD_EXPENSE':
-      // NOTE: we DO NOT use array.push, as this would change our array.
-      // Instead we could use concat, as this reads and returns, but doens't change
-      // Actually we hsall use the spread operator: ...arrayName
-      return [...state, action.expense]
-    case 'REMOVE_EXPENSE':
-      // This is a little tricky. Normally we would pass in 'expense'
-      // Here, we instead destructure expense, pulling out id only
-      return state.filter(( { id }) => action.id !== id)
-    case 'EDIT_EXPENSE':
-      return state.map((expense) => {
-        if (expense.id === action.id) {
-          return {
-            ...expense,
-            ...action.updates
-          }
-        } else {
-          return expense
-        }
-      })
+    case 'CHANGE_SOCIAL_MEDIA':
+      return {...state, socialMedia: action.socialMedia}
     default:
       return state
-  }
+    }
+
 }
 
