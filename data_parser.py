@@ -3,20 +3,21 @@ import preprocessor as p
 import os
 
 
+
 class DataParser():
-  def __init__(self, csv_file):
-    self.csv_file = csv_file
-    self.row_list = []
-    return
+	def __init__(self, csv_file):
+		self.csv_file = csv_file
+		self.row_list = []
+		return
 
-  def process_csv(self):
-    # Convert the csv to a dataframe
-    df = pd.read_csv(self.csv_file, delimiter=',')
+	def process_csv(self):
+		# Convert the csv to a dataframe
+		df = pd.read_csv(self.csv_file, delimiter=',')
 
-    # Processed dataframes
+		# Processed dataframes
 
-    # For reference
-    '''
+		# For reference
+		'''
 		row_list = [];
 		row_list.append({'type':'INFJ', 'posts':'hello'});
 		row_list.append({'type':"INTP", 'posts':'hg'});
@@ -28,27 +29,50 @@ class DataParser():
 
 		'''
 
-    personality_types = df['type'].unique().tolist()
-    for personality in personality_types:
-      # print(personality);
+		personality_types = df['type'].unique().tolist()
+		for personality in personality_types:
+			# print(personality);
 
-      # print(df.loc[df['type'] == personality]);
+			# print(df.loc[df['type'] == personality]);
 
-      personality_df = df.loc[df['type'] == personality]
-      for index, row in personality_df.iterrows():
-        self.segment_posts(row['posts'], personality)
-        # print(row['type'], self.segment_posts(row['posts'], personality));
+			personality_df = df.loc[df['type'] == personality]
+			for index, row in personality_df.iterrows():
+				# One big post segment
+				self.segment_posts_2(row['posts'], personality);
 
-    processed_df = pd.DataFrame(self.row_list)
+				# Single post segment
+				#self.segment_posts(row['posts'], personality)
+				# print(row['type'], self.segment_posts(row['posts'], personality));
 
-    # DEBUG statements
-    # print(self.row_list);
-    # print(processed_df);
+		processed_df = pd.DataFrame(self.row_list)
 
-    # Save out DF to csv
-    processed_df.to_csv(os.path.join('Dataset', 'split_dataset.csv'), index=False)
+		# DEBUG statements
+		# print(self.row_list);
+		# print(processed_df);
 
-    return processed_df
+		# Save out DF to csv
+		processed_df.to_csv(os.path.join('Dataset', 'clean_mbti_v2.csv'), index=False)
+
+		return processed_df
+
+
+	# segment posts into one whole string
+	def segment_posts_2(self, posts, personality):
+		post_split = posts.split("|||");
+		final_post_list = [];
+		for post in post_split:
+			# Preprocess the tweets
+			post = p.tokenize(post);
+			post = self.post_process(post);
+
+			# append to the final string
+			final_post_list.append(post);
+
+		final_post_str = " ".join(final_post_list);
+		# Append to the row list
+		one_personalit_one_big_post = {'type':personality, 'post':final_post_str};
+		self.row_list.append(one_personalit_one_big_post);
+
 
 	# segment posts and append to row_list
 	def segment_posts(self, posts, personality):
@@ -78,28 +102,34 @@ class DataParser():
 		return
 
 
-  def create_datapoints(self):
+	def create_datapoints(self):
 
-    return
+		return
 
-  # segment posts and append to row_list
-  def segment_posts(self, posts, personality):
-    post_split = posts.split("|||")
-    for post in post_split:
-      one_personality_one_post = {'type': personality, 'post': post};
-      self.row_list.append(one_personality_one_post)
-    return
+	# segment posts and append to row_list
+	def segment_posts(self, posts, personality):
+		post_split = posts.split("|||")
+		for post in post_split:
+			one_personality_one_post = {'type': personality, 'post': post};
+			self.row_list.append(one_personality_one_post)
+		return
 
 
 if __name__ == "__main__":
-  dataset = "./Dataset/mbti_1.csv"
-  dp = DataParser(dataset)
+	dataset = "./Dataset/mbti_1.csv"
+	dp = DataParser(dataset)
 
-	one_p_one_post_df = dp.process_csv();
-	print(one_p_one_post_df);
-  one_p_one_post_df = dp.process_csv()
-  print(one_p_one_post_df)
+	# One post
+	# one_p_one_post_df = dp.process_csv();
+	# print(one_p_one_post_df);
+	# one_p_one_post_df = dp.process_csv()
+	# print(one_p_one_post_df)
 
-	# Save the new processed df to csv
-	one_p_one_post_df.to_csv('./Dataset/clean_mbti.csv', sep='\t', encoding='utf-8');
+	# # Save the new processed df to csv
+	# one_p_one_post_df.to_csv('./Dataset/clean_mbti.csv', index=False);
+
+	# One big post one personality
+	one_p_one_big_post_df = dp.process_csv();
+	print(one_p_one_big_post_df);
+	one_p_one_big_post_df.to_csv('./Dataset/clean_mbti_22.csv', index=False)
 
