@@ -65,9 +65,6 @@ class ActionButton extends Component {
           let personalityNum = personToNumber[personality];
           this.props.dispatch(selected(personalityNum))
         })
-      }
-
-      setTimeout(console.log(resp), 500)
     }
 
   componentDidMount() {
