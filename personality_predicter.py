@@ -23,9 +23,13 @@ personality_types = ['INFJ', 'ENTP', 'INTP', 'INTJ', 'ENTJ', 'ENFJ', 'INFP', 'EN
 
 
 def predict_personality_from_post(model, post, wb):
-  # Preprocess the tweets
-  post = p.tokenize(post)
-  # print(post);
+	# Encoder
+	encoder = LabelEncoder();
+	encoder.classes_ = np.load('classes.npy');
+
+	# Preprocess the tweets
+	post = p.tokenize(post);
+	#print(post);
 
   # Grab the embeddings and averages
   embeddings_from_post = np.array(wb.compute_embeddings([post], wb.embedding_index))
@@ -39,11 +43,15 @@ def predict_personality_from_post(model, post, wb):
   prediction = model.predict(embedding_avgs)
   # print(prediction);
 
-  # Get personality type
-  index_personality = prediction[0] - 1
-  personality_type = personality_types[index_personality]
+	# Get personality type
+	index_personality = prediction[0] - 1;
+	personality_type = personality_types[index_personality];
 
-  return personality_type
+	prediction = [prediction[0] - 1];
+	personality_type = encoder.inverse_transform(prediction)[0];
+
+
+	return personality_type;
 
 
 # --- Good ol main ---
@@ -71,6 +79,14 @@ def main():
 
   return
 
+	# --- Predicting personality ---
+	personality_type = predict_personality_from_post(classifier, post, wb);
+	print(personality_type);
+
+
+
+	return;
+
 
 if __name__ == "__main__":
-  main()
+	main();

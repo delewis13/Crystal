@@ -11,17 +11,22 @@ import pickle
 import numpy as np
 
 from sklearn.metrics import classification_report
+from sklearn.preprocessing import LabelEncoder
 
 import preprocessor as p
 
 import argparse
 
 # --- Classifier ---
-personality_types = ['INFJ', 'ENTP', 'INTP', 'INTJ', 'ENTJ', 'ENFJ', 'INFP', 'ENFP', 
+personality_types = ['INFJ', 'ENTP', 'INTP', 'INTJ', 'ENTJ', 'ENFJ', 'INFP', 'ENFP',
 					'ISFP', 'ISTP', 'ISFJ', 'ISTJ', 'ESTP', 'ESFP', 'ESTJ', 'ESFJ'];
 #
 
 def predict_personality_from_post(model, post, wb):
+	# Encoder
+	encoder = LabelEncoder();
+	encoder.classes_ = np.load('classes.npy');
+
 	# Preprocess the tweets
 	post = p.tokenize(post);
 	#print(post);
@@ -38,9 +43,13 @@ def predict_personality_from_post(model, post, wb):
 	prediction = model.predict(embedding_avgs);
 	#print(prediction);
 
-	# Get personality type 
+	# Get personality type
 	index_personality = prediction[0] - 1;
 	personality_type = personality_types[index_personality];
+
+	prediction = [prediction[0] - 1];
+	personality_type = encoder.inverse_transform(prediction)[0];
+
 
 	return personality_type;
 
@@ -70,7 +79,7 @@ def main():
 	# --- Predicting personality ---
 	personality_type = predict_personality_from_post(classifier, post, wb);
 	print(personality_type);
-	
+
 
 
 	return;
