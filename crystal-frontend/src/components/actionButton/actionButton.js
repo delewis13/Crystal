@@ -56,15 +56,19 @@ class ActionButton extends Component {
 
       this.props.dispatch(addUserPosts(messagesList))
 
-      fetch(`localhost:5000/${myLongString}`, {
+      fetch('localhost:5000/api/myLongString', {
         method: 'POST'
-        }).then((response) => {
-          console.log(response)
-          let personality;
-          // Somehow get our string
-          let personalityNum = personToNumber[personality];
-          this.props.dispatch(selected(personalityNum))
-        })
+      })
+      
+      // fetch(`localhost:5000/api/myLongString`, {
+      //   method: 'POST'
+      //   }).then((response) => {
+      //     console.log(response)
+      //     let personality;
+      //     // Somehow get our string
+      //     let personalityNum = personToNumber[personality];
+      //     this.props.dispatch(selected(personalityNum))
+      //   })
     }
 
   componentDidMount() {
