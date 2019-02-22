@@ -4,6 +4,8 @@
   border-radius: 2em;
   width: 18em;
   align-items: center;
+  margin-bottom: 0.5em;
+  transition: all 0.2s ease-in-out;
 }
 
 .action-button[disabled] {

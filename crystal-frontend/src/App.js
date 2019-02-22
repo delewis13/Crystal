@@ -15,8 +15,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <LoadingOverlay 
-          active={this.props.loading} 
+        <LoadingOverlay
+          active={this.props.loading}
+          className="myLoader" 
           spinner
           text="Querying social media...">
           <Header />
@@ -26,7 +27,7 @@ class App extends Component {
             <ActionButton />
           </Container>
         </LoadingOverlay>
-      </div>    
+      </div>
     );
   }
 }

@@ -4,7 +4,7 @@ import store from '../../store/configureStore';
 import './dashboard.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import { Container } from 'react-bootstrap'
-import { numberToDesc, personToNumber, numberToPerson } from './personalityDescriptors'
+import { numberToDesc, personToNumber, numberToPerson, depressionIndicator } from './personalityDescriptors'
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root')
@@ -27,17 +27,32 @@ class Dashboard extends Component {
     }
 
     return images.map((imageName) => {return (
-      <div className="flex-item" key={imageName} onClick={this.openModal.bind(this, imageName)}>
+      <div className="flex-item" key={imageName} id={numberToPerson[imageName]} onClick={this.openModal.bind(this, imageName)}>
             <img className="flex-image" alt="" id={imageName} src={'/img/' + String(imageName) + '.png'} />
       </div>)
     })
   }
 
   componentDidUpdate() {
-    // this.props.selected should be a number
-    if (this.props.selected) {
-      let selectedImage = document.getElementById(this.props.selected)
-      selectedImage.classList.add('highlight')
+    if (this.props.selected > 0 || this.props.selected === "reset") {
+      console.log('hi')
+      // this.props.selected should be a number
+      var i;
+      for (i=1; i < 17; i++) {
+        let selectedImage = document.getElementById(String(i))
+        let selectedDiv = document.getElementById(numberToPerson[i])
+        if (i === this.props.selected) {
+          selectedDiv.classList.add('highlight')
+          console.log(numberToPerson[i])
+          //selectedDiv = document.getElementById(numberToPerson[i])
+          //selectedDiv.appendChild(<p>{depressionIndicator[numberToPerson[i]]}</p>)
+        } else if (i > this.props.selected || i < this.props.selected) {
+          selectedImage.classList.add('grayscale')
+        } else {
+          selectedImage.classList.remove('grayscale')
+          selectedDiv.classList.remove('highlight')
+        }
+      }
     }
   }
 
@@ -61,6 +76,9 @@ class Dashboard extends Component {
       <Container>
         <div className="flex">
           {this.createGrid()}
+        </div>
+        <div className="depression margin-bottom">
+          { (this.props.selected > 0) ? `Relative Predisposition to Depression: ${depressionIndicator[numberToPerson[this.props.selected]]}` : ''}
         </div>
         <Modal
           isOpen={this.state.modalOpen}

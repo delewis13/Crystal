@@ -1,12 +1,14 @@
 import pickle
 from flask import Flask
+from flask_cors import CORS
 from flask import request
 from flask import send_from_directory
 from WordEmb2 import WordEmbedder
 import pickle
 import personality_predicter
 app = Flask(__name__)
-
+# cross origin resource sharing
+cors = CORS(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def init():

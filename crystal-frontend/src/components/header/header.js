@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap'
 
 const Header = () => (
-  <Navbar className="center" bg="light" variant="light">
+  <Navbar className="center navBar" bg="light" variant="light">
     <Navbar.Brand className="col-md6 col-md-offset-3" href="#home">
       <img
         alt=""

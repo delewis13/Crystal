@@ -6,6 +6,12 @@
   justify-content: center;
 }
 
+.navBar {
+  background-color: #fff5db !important;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ffa787
+}
+
 .small-margin {
   margin: 0.25em;
 }

@@ -1,6 +1,6 @@
 export const numberToDesc = {
 1: 'Quiet, serious, earn success by thoroughness and dependability. Practical, matter-of-fact, realistic, and responsible. Decide logically what should be done and work toward it steadily, regardless of distractions. Take pleasure in making everything orderly and organized - their work, their home, their life. Value traditions and loyalty.',
-2: "Quiet, friendly, sensitive, and kind. Enjoy the present moment, what's going on around them. Like to have their own space and to work within their own time frame. Loyal and committed to their values and to people who are important to them. Dislike disagreements and conflicts, do not force their opinions or values on others.", 
+2: "Quiet, friendly, sensitive, and kind. Enjoy the present moment, what's going on around them. Like to have their own space and to work within their own time frame. Loyal and committed to their values and to people who are important to them. Dislike disagreements and conflicts, do not force their opinions or values on others.",
 3: 'Idealistic, loyal to their values and to people who are important to them. Want an external life that is congruent with their values. Curious, quick to see possibilities, can be catalysts for implementing ideas. Seek to understand people and to help them fulfill their potential. Adaptable, flexible, and accepting unless a value is threatened.',
 4: 'Warmhearted, conscientious, and cooperative. Want harmony in their environment, work with determination to establish it. Like to work with others to complete tasks accurately and on time. Loyal, follow through even in small matters. Notice what others need in their day-by-day lives and try to provide it. Want to be appreciated for who they are and for what they contribute.',
 5: 'Tolerant and flexible, quiet observers until a problem appears, then act quickly to find workable solutions. Analyze what makes things work and readily get through large amounts of data to isolate the core of practical problems. Interested in cause and effect, organize facts using logical principles, value efficiency.',
@@ -53,4 +53,23 @@ export const numberToPerson = {
 14: 'ESTJ',
 15: 'ENFP',
 16: 'ENFJ'
+}
+
+export const depressionIndicator = {
+  ESTJ: 'Least Likely',
+  ESTP: 'Least Likely',
+  ESFJ: 'Least Likely',
+  ESFP: 'Least Likely',
+  ENTJ: 'Least Likely',
+  ENTP: 'Least Likely',
+  ENFJ: 'Least Likely',
+  ENFP: 'Least Likely',
+  ISTJ: 'Least Likely',
+  ISTP: 'Least Likely',
+  ISFJ: 'Least Likely',
+  INTJ: 'Least Likely',
+  ISFP: 'Likely',
+  INTP: 'Likely',
+  INFJ: 'Most Likely',
+  INFP: 'Most Likely'
 }

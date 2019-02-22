@@ -17,6 +17,15 @@ class ActionButton extends Component {
     feed: ''
   }
 
+  reset = () => {
+    if (this.props.selected > 0) {
+      this.props.dispatch(addUserPosts(''))
+      this.props.dispatch(loading(false))
+      this.props.dispatch(changeSocialMedia(''))
+      this.props.dispatch(selected('reset'))
+    }
+  }
+
   triggerLoading = () => {this.props.dispatch(loading(true))}
 
   responseFacebook = (response) => {
@@ -56,10 +65,14 @@ class ActionButton extends Component {
 
       this.props.dispatch(addUserPosts(messagesList))
 
-      fetch('localhost:5000/api/myLongString', {
+      fetch('http://localhost:5000/api/myLongString', {
         method: 'POST'
+      }).then((response) => {return response.text()}).then((personality) => {
+        let personalityNum = personToNumber[personality];
+        this.props.dispatch(selected(personalityNum))
+        this.props.dispatch(loading(false))
       })
-      
+
       // fetch(`localhost:5000/api/myLongString`, {
       //   method: 'POST'
       //   }).then((response) => {
@@ -113,8 +126,10 @@ class ActionButton extends Component {
 
   render() {
       return (
-        <Button className="action-button" id="action-button" ref="actionButton">
-          {this.buttonContent()}
+        <Button className="action-button" id="action-button" ref="actionButton" onClick={this.reset}>
+        { (this.props.selected > 0) ?
+          <div>Reset</div>
+        : this.buttonContent() }
         </Button>
       )
     }
@@ -137,7 +152,8 @@ class ActionButton extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    socialMedia: state.user.socialMedia
+    socialMedia: state.user.socialMedia,
+    selected: state.user.selected
   }
 }
 

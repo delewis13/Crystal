@@ -11,11 +11,13 @@ class SocialMedia extends Component {
     this.props.dispatch(changeSocialMedia(""))
   }
 
+
+
   handleClick = (e) => {
     // Add the appropriate highlight classes
     let facebook = document.getElementById('facebook')
     let twitter = document.getElementById('twitter')
-    
+
     e.target.classList.toggle('flex-icon-focus')
     if (e.target.id === 'facebook') {
       twitter.classList.remove('flex-icon-focus')
@@ -36,8 +38,11 @@ class SocialMedia extends Component {
   render() {
     return (
       <div className="flex center">
-        <img className="flex-icon" src="/img/facebook.png" id="facebook" name="facebook" onClick={this.handleClick} alt=""/>
-        <img className="flex-icon" src="/img/twitter.png" id="twitter" name="twitter" onClick={this.handleClick} alt=""/>
+        { (this.props.selected > 0) ? <div className="margin-bottom">Disclaimer: The information on this site is not intended or implied to be a substitute for professional medical advice, diagnosis or treatment. The depression indicator for the personality trait is to be taken only as a guide and professional medical advice should be sough where required.</div>
+        :
+        <div><img className="flex-icon" src="/img/facebook.png" id="facebook" name="facebook" onClick={this.handleClick} alt=""/>
+        <img className="flex-icon" src="/img/twitter.png" id="twitter" name="twitter" onClick={this.handleClick} alt=""/></div>
+      }
       </div>
     )
   }
@@ -45,7 +50,8 @@ class SocialMedia extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    socialMedia: state.user.socialMedia
+    socialMedia: state.user.socialMedia,
+    selected: state.user.selected
   }
 }
 
