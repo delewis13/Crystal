@@ -3,6 +3,7 @@
   margin: 0.25em;
   border-radius: 2em;
   width: 18em;
+  align-items: center;
 }
 
 .action-button[disabled] {

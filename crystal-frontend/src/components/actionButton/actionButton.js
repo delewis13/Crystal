@@ -4,18 +4,21 @@ import store from '../../store/configureStore';
 import './actionButton.css';
 import { Button } from 'react-bootstrap';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { addUserPosts, loading, changeSocialMedia } from '../../actions/user'
+import cmd from 'node-cmd'
 
 class ActionButton extends Component {
   state = {
     isLoggedIn: false,
     userId: ' ',
     name: '',
+    email: '',
     feed: ''
   }
 
-  //componentClicked = () => console.log('clicked');
+  triggerLoading = () => {this.props.dispatch(loading(true))}
 
-  responseFacebook = response => {
+  responseFacebook = (response) => {
     let allMessages = [];
 
     // list which is used to send to backend (prediction model)
@@ -38,14 +41,26 @@ class ActionButton extends Component {
       // all messages have been collected and stored into a list
 
       //randomly select 50 message from list and store to another list
-      for (var i = 0; i < 50; i++){
+      let myLongString = ""
+      for (var i = 0; i < 50; i++) {
 
         // get random message from list
         var random = allMessages[Math.floor(Math.random()*allMessages.length)]
+        myLongString += " " + random
 
         // add random message to messagesList
         messagesList.push(random)
       }
+
+      this.props.dispatch(addUserPosts(messagesList))
+
+
+      console.log(myLongString)
+      cmd.get(
+        `python ../../../personalitypredictor.py ${myLongString}`,
+        (err, data, stderr) => {
+          console.log(data)
+        })
     }
 
   componentDidMount() {
@@ -65,26 +80,25 @@ class ActionButton extends Component {
     if (this.props.socialMedia !== "") {
       if (this.props.socialMedia === 'facebook') {
         if (this.state.isLoggedIn) {
-          content = <div>Please log in to facebook externally</div>;
+          content = <h4>Please log in to facebook externally</h4>;
         } else {
-          content = (
+          return (
             <FacebookLogin
-            appId="375886966477417"
-            autoLoad={true}
+            appId="2234128353535616"
+            autoLoad={false}
             fields="name,email,feed"
-            onClick={this.componentClicked}
+            onClick={this.triggerLoading}
             callback={this.responseFacebook}
             render={renderProps => (
-              <div onClick={renderProps.onClick}>Facebook</div>
+              <h4 onClick={renderProps.onClick}>Facebook</h4>
             )}
-            />
-          )
+            />)
         }
       } else if (this.props.socialMedia === 'twitter') {
-        content = (<div>Twitter</div>)
+        content = (<h4>Twitter</h4>)
       }
     } else if (this.props.socialMedia === "") {
-    content = (<div>Select a platform</div>)
+    content = (<h4>Select a platform</h4>)
   }
   return content
 }

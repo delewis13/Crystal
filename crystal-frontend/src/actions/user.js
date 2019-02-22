@@ -4,3 +4,13 @@ export const changeSocialMedia = (socialMedia) => ({
   type: 'CHANGE_SOCIAL_MEDIA',
   socialMedia
 })
+
+export const addUserPosts = (posts) => ({
+  type: 'ADD_USER_POSTS',
+  posts
+})
+
+export const loading = (loading) => ({
+  type: 'LOADING',
+  loading
+})

@@ -38,25 +38,26 @@
 .Modal {
   border: 2px solid rgb(120, 170, 200, 1);
   position: absolute;
-  top: 20em;
-  left: 30em;
-  right: 30em;
-  bottom: 20em;
+  display: flex;
+  padding: 1.5em;
+  top: 20%;
+  left: 20%;
+  right: 20%;
   background-color: rgb(179, 231, 255, 1);
   opacity: 1;
 }
 
 .ReactModal__Overlay {
     opacity: 0;
-    transition: opacity 500ms ease-in-out;
+    transition: opacity 250ms ease-in-out;
 }
 
 .ReactModal__Overlay--after-open{
     opacity: 1;
-    transition: opacity 500ms ease-in-out;
+    transition: opacity 250ms ease-in-out;
 }
 
 .ReactModal__Overlay--before-close{
     opacity: 0;
-    transition: opacity 500ms ease-in-out;
+    transition: opacity 250ms ease-in-out;
 }
