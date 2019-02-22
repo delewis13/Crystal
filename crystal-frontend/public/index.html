@@ -37,5 +37,24 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://cdn.jsdelivr.net/npm/codebird@2.6.0/codebird.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+    var cb = new Codebird;
+    cb.setConsumerKey("aBO62GT6jNXYbsC5IJDAXXiM2", "FXQRiLeoOTSYU9IDgv6q0t8JexRDrkCTEsMuRy1RlfO0WZW5eG");
+    cb.setToken("561069478-grpudfT8gJY63Bz8LAS230eWQeihjX0A95ozVaQF", "rp9kUo5udQykul5lf4ZNqC5eSCW06XezCxqLXsLRdZx3F");
+
+    cb.__call(
+    "statuses_userTimeline",
+    {
+        q: "BelalDirani"
+    },
+    function (reply) {
+        console.log(reply);
+    }
+);
+
+    </script>
+
   </body>
 </html>
