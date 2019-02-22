@@ -1,5 +1,5 @@
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
+#from keras.preprocessing.text import Tokenizer
+#from keras.preprocessing.sequence import pad_sequences
 import pandas as pd
 import numpy as np
 import os
@@ -12,8 +12,8 @@ from nltk.corpus import wordnet
 from nltk.tokenize import TreebankWordTokenizer
 
 # FOR REPEATABLITY
-RANDOM_SEED = 7;
-np.random.seed(RANDOM_SEED);
+#RANDOM_SEED = 7;
+#np.random.seed(RANDOM_SEED);
 
 class WordEmbedder:
 	def __init__(self, embedding_index=None):
@@ -44,6 +44,8 @@ class WordEmbedder:
 		x_val = data[-nb_validation_samples:]
 		y_val = labels[-nb_validation_samples:]
 
+		return (x_train, y_train, x_val, y_val);
+
 
 
 
@@ -52,8 +54,7 @@ class WordEmbedder:
 		df = pd.read_csv(csv_file, delimiter=',');
 
 		# For computation save
-		#df = df.head(n=100);
-
+		#df = df.head(n=10);
 
 		# Randomly sample 70% of your dataframe
 		#df = df.sample(frac=0.7)
@@ -64,7 +65,8 @@ class WordEmbedder:
 		# --- Prepare the texts ---
 		# Get the texts
 		texts = df['post'].tolist();
-		texts = str(texts);				# stringfy
+
+
 
 		# Compute the embedding index if none is supplied
 		if self.embedding_index == None:
@@ -76,6 +78,8 @@ class WordEmbedder:
 		# Compute the embeddings
 		print('[+] Computing the embeddings');
 		embeddings = self.compute_embeddings(texts, embedding_index);
+
+
 		# Hacky solution
 		self.embeddings_index = embedding_index;
 
@@ -136,6 +140,7 @@ class WordEmbedder:
 	# return averages for each sentence embedding
 	def compute_average(self, embeddings):
 		mean_matrix = np.zeros((embeddings.shape[0], self.embedding_dims))
+		#print('[+] mean matrix: ' + str(mean_matrix.shape));
 		for i in range(embeddings.shape[0]):
 			mean_matrix[i,:] = np.mean(embeddings[i], axis=0);
 			#print(embeddings[i]);
@@ -149,6 +154,7 @@ class WordEmbedder:
 
 		for text in texts:
 			embedding = [];
+
 			for word in tokenizer.tokenize(text):
 				word_embedding = self.compute_word_embedding(word, embedding_index);
 				if word_embedding is not None:
