@@ -7,16 +7,37 @@ import { changeSocialMedia } from '../../actions/user'
 
 class SocialMedia extends Component {
 
+  componentDidMount() {
+    this.props.dispatch(changeSocialMedia(""))
+  }
+
   handleClick = (e) => {
-    this.props.dispatch(changeSocialMedia(e.target.name))
+    // Add the appropriate highlight classes
+    let facebook = document.getElementById('facebook')
+    let twitter = document.getElementById('twitter')
+    
+    e.target.classList.toggle('flex-icon-focus')
+    if (e.target.id === 'facebook') {
+      twitter.classList.remove('flex-icon-focus')
+    } else if (e.target.id === 'twitter') {
+      facebook.classList.remove('flex-icon-focus')
+    } else {
+      alert('Unexpected behaviour')
+    }
+
+    // Depending on what classes now exist on the element, dispatch appropriately
+    if (e.target.classList.contains('flex-icon-focus')) {
+      this.props.dispatch(changeSocialMedia(e.target.name))
+    } else {
+      this.props.dispatch(changeSocialMedia(""))
+    }
   }
 
   render() {
     return (
       <div className="flex center">
-        <img className="flex-icon" src="/img/facebook.png" name="facebook
-        " onClick={this.handleClick} alt=""/>
-        <img className="flex-icon" src="/img/twitter.png" name="twitter" onClick={this.handleClick} alt=""/>
+        <img className="flex-icon" src="/img/facebook.png" id="facebook" name="facebook" onClick={this.handleClick} alt=""/>
+        <img className="flex-icon" src="/img/twitter.png" id="twitter" name="twitter" onClick={this.handleClick} alt=""/>
       </div>
     )
   }
@@ -24,7 +45,7 @@ class SocialMedia extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    socialMedia: state.socialMedia
+    socialMedia: state.user.socialMedia
   }
 }
 

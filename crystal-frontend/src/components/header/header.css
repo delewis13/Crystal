@@ -1,0 +1,15 @@
+.flex {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+}
+
+.small-margin {
+  margin: 0.25em;
+}
+
+h1 {
+  font-size: 3em;
+}

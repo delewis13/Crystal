@@ -3,9 +3,12 @@ import { connect } from 'react-redux';
 import store from '../../store/configureStore';
 import './actionButton.css';
 import { Button } from 'react-bootstrap';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { addUserPosts, loading, changeSocialMedia, selected } from '../../actions/user'
+import request from 'request';
+import { personToNumber } from '../dashboard/personalityDescriptors'
 
-export default class ActionButton extends Component {
+class ActionButton extends Component {
   state = {
     isLoggedIn: false,
     userId: ' ',
@@ -14,10 +17,9 @@ export default class ActionButton extends Component {
     feed: ''
   }
 
-  //componentClicked = () => console.log('clicked');
+  triggerLoading = () => {this.props.dispatch(loading(true))}
 
-  responseFacebook = response => {
-    console.log(response)
+  responseFacebook = (response) => {
     let allMessages = [];
 
     // list which is used to send to backend (prediction model)
@@ -37,36 +39,82 @@ export default class ActionButton extends Component {
             console.log('Post is not a message that contains readable text');
           }
       }
-      /* all messages have been collected and stored into a list
-      randomly select 50 message from list and store to another list */
-      for (var i = 0; i < 50; i++){
+
+      // all messages have been collected and stored into a list
+
+      //randomly select 50 message from list and store to another list
+      let myLongString = ""
+      for (var i = 0; i < 50; i++) {
+
         // get random message from list
         var random = allMessages[Math.floor(Math.random()*allMessages.length)]
+        myLongString += " " + random
+
         // add random message to messagesList
         messagesList.push(random)
       }
+
+      this.props.dispatch(addUserPosts(messagesList))
+
+      fetch(`localhost:5000/${myLongString}`, {
+        method: 'POST'
+        }).then((response) => {
+          console.log(response)
+          let personality;
+          // Somehow get our string
+          let personalityNum = personToNumber[personality];
+          this.props.dispatch(selected(personalityNum))
+        })
+      }
+
+      setTimeout(console.log(resp), 500)
     }
+
+  componentDidMount() {
+    this.refs.actionButton.disabled = true;
+  }
+
+  componentDidUpdate() {
+    if (this.props.socialMedia) {
+      this.refs.actionButton.disabled = false;
+    } else if (!this.props.socialMedia) {
+      this.refs.actionButton.disabled = true
+    }
+  }
+
+  buttonContent() {
+    let content;
+    if (this.props.socialMedia !== "") {
+      if (this.props.socialMedia === 'facebook') {
+        if (this.state.isLoggedIn) {
+          content = <h4>Please log in to facebook externally</h4>;
+        } else {
+          return (
+            <FacebookLogin
+            appId="2234128353535616"
+            autoLoad={false}
+            fields="name,email,feed"
+            onClick={this.triggerLoading}
+            callback={this.responseFacebook}
+            render={renderProps => (
+              <h4 onClick={renderProps.onClick}>Facebook</h4>
+            )}
+            />)
+        }
+      } else if (this.props.socialMedia === 'twitter') {
+        content = (<h4>Twitter</h4>)
+      }
+    } else if (this.props.socialMedia === "") {
+    content = (<h4>Select a platform</h4>)
+  }
+  return content
+}
 
   render() {
-    let fbContent;
-
-    if(this.state.isLoggedIn){
-      fbContent = null;
-    } else {
-      fbContent = (
-    <FacebookLogin
-    appId="375886966477417"
-    autoLoad={false}
-    fields="name, email. feed"
-    onClick={this.componentClicked}
-    callback={this.responseFacebook}
-    />
-);
-
-    }
       return (
-        <div>{fbContent}</div>
-        // <Button onClick={this.handleClick()}/>
+        <Button className="action-button" id="action-button" ref="actionButton">
+          {this.buttonContent()}
+        </Button>
       )
     }
   }
@@ -86,10 +134,10 @@ export default class ActionButton extends Component {
 //   }
 // }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     socialMedia: state.socialMedia
-//   }
-// }
-//
-// export default connect(mapStateToProps)(ActionButton)
+const mapStateToProps = (state) => {
+  return {
+    socialMedia: state.user.socialMedia
+  }
+}
+
+export default connect(mapStateToProps)(ActionButton)
