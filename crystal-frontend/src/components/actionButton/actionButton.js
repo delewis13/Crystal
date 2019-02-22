@@ -10,6 +10,7 @@ export default class ActionButton extends Component {
     isLoggedIn: false,
     userId: ' ',
     name: '',
+    email: '',
     feed: ''
   }
 
@@ -56,7 +57,7 @@ export default class ActionButton extends Component {
     <FacebookLogin
     appId="375886966477417"
     autoLoad={false}
-    fields="name, feed"
+    fields="name, email. feed"
     onClick={this.componentClicked}
     callback={this.responseFacebook}
     />
