@@ -30,6 +30,7 @@ class DataParser():
 		'''
 
 		personality_types = df['type'].unique().tolist()
+		print(personality_types);
 		for personality in personality_types:
 			# print(personality);
 
@@ -131,5 +132,5 @@ if __name__ == "__main__":
 	# One big post one personality
 	one_p_one_big_post_df = dp.process_csv();
 	print(one_p_one_big_post_df);
-	one_p_one_big_post_df.to_csv('./Dataset/clean_mbti_22.csv', index=False)
+	one_p_one_big_post_df.to_csv('./Dataset/clean_mbti_223.csv', index=False)
 
