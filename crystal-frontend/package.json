@@ -12,8 +12,10 @@
     "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.2",
     "react-facebook-login": "^4.1.1",
+    "react-loading-overlay": "^1.0.1",
     "react-modal": "^3.8.1",
     "react-redux": "^6.0.1",
+    "react-request": "^3.1.2",
     "react-scripts": "2.1.5",
     "request": "^2.88.0"
   },

@@ -14,3 +14,8 @@ export const loading = (loading) => ({
   type: 'LOADING',
   loading
 })
+
+export const selected = (selected) => ({
+  type: 'SELECTED',
+  selected
+})

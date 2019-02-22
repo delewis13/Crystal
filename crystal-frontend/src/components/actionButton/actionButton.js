@@ -4,8 +4,9 @@ import store from '../../store/configureStore';
 import './actionButton.css';
 import { Button } from 'react-bootstrap';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import { addUserPosts, loading, changeSocialMedia } from '../../actions/user'
-import cmd from 'node-cmd'
+import { addUserPosts, loading, changeSocialMedia, selected } from '../../actions/user'
+import request from 'request';
+import { personToNumber } from '../dashboard/personalityDescriptors'
 
 class ActionButton extends Component {
   state = {
@@ -54,13 +55,18 @@ class ActionButton extends Component {
 
       this.props.dispatch(addUserPosts(messagesList))
 
-
-      console.log(myLongString)
-      cmd.get(
-        `python ../../../personalitypredictor.py ${myLongString}`,
-        (err, data, stderr) => {
-          console.log(data)
+      fetch(`localhost:5000/${myLongString}`, {
+        method: 'POST'
+        }).then((response) => {
+          console.log(response)
+          let personality;
+          // Somehow get our string
+          let personalityNum = personToNumber[personality];
+          this.props.dispatch(selected(personalityNum))
         })
+      }
+
+      setTimeout(console.log(resp), 500)
     }
 
   componentDidMount() {

@@ -4,7 +4,7 @@ import store from '../../store/configureStore';
 import './dashboard.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import { Container } from 'react-bootstrap'
-import getPersonalityDescriptors from './personalityDescriptors'
+import { numberToDesc, personToNumber, numberToPerson } from './personalityDescriptors'
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root')
@@ -28,19 +28,26 @@ class Dashboard extends Component {
 
     return images.map((imageName) => {return (
       <div className="flex-item" key={imageName} onClick={this.openModal.bind(this, imageName)}>
-            <img className="flex-image" alt="" src={'/img/' + String(imageName) + '.png'} />
+            <img className="flex-image" alt="" id={imageName} src={'/img/' + String(imageName) + '.png'} />
       </div>)
     })
   }
 
+  componentDidUpdate() {
+    // this.props.selected should be a number
+    if (this.props.selected) {
+      let selectedImage = document.getElementById(this.props.selected)
+      selectedImage.classList.add('highlight')
+    }
+  }
+
   openModal(imageName, e) {
-    const personalityDescriptors = getPersonalityDescriptors()
     this.setState({modalOpen: true});
     setTimeout(() => {
       let title = document.getElementById('modal-title')
       let text = document.getElementById('modal-text')
-      title.innerHTML = 'Your personality type:'
-      text.innerHTML = personalityDescriptors[imageName - 1]
+      title.innerHTML = numberToPerson[imageName]
+      text.innerHTML = numberToDesc[imageName]
   }, 100)
   }
 
@@ -72,4 +79,10 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    selected: state.user.selected
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard);

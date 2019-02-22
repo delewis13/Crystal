@@ -14,6 +14,8 @@ export default (state = usersDefaultState, action) => {
       return {...state, userPosts: action.posts}
     case 'LOADING':
       return {...state, loading: action.loading}
+    case 'SELECTED':
+      return {...state, selected: action.selected}
     default:
       return state
     }
