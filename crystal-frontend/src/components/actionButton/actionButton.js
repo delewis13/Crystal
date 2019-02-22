@@ -16,10 +16,12 @@ export default class ActionButton extends Component {
   //componentClicked = () => console.log('clicked');
 
   responseFacebook = response => {
+    console.log(response)
     let allMessages = [];
 
     // list which is used to send to backend (prediction model)
     let messagesList = [];
+
     var posts = response.feed.data;
     // iterate through user posts feed
     for (var i = 0; i < posts.length; i++) {
@@ -34,15 +36,11 @@ export default class ActionButton extends Component {
             console.log('Post is not a message that contains readable text');
           }
       }
-
-      // all messages have been collected and stored into a list
-
-      //randomly select 50 message from list and store to another list
+      /* all messages have been collected and stored into a list
+      randomly select 50 message from list and store to another list */
       for (var i = 0; i < 50; i++){
-
         // get random message from list
         var random = allMessages[Math.floor(Math.random()*allMessages.length)]
-
         // add random message to messagesList
         messagesList.push(random)
       }
@@ -57,8 +55,8 @@ export default class ActionButton extends Component {
       fbContent = (
     <FacebookLogin
     appId="375886966477417"
-    autoLoad={true}
-    fields="name,email,feed"
+    autoLoad={false}
+    fields="name, feed"
     onClick={this.componentClicked}
     callback={this.responseFacebook}
     />
