@@ -65,7 +65,7 @@ class ActionButton extends Component {
 
       this.props.dispatch(addUserPosts(messagesList))
       console.log(myLongString)
-      fetch('http://localhost:5000/api/myLongString', {
+      fetch('http://localhost:8000/api/myLongString', {
         method: 'POST'
       }).then((response) => {return response.text()}).then((personality) => {
         let personalityNum = personToNumber[personality];
