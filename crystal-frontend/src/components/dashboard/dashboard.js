@@ -28,7 +28,7 @@ class Dashboard extends Component {
 
     return images.map((imageName) => {return (
       <div className="flex-item" key={imageName} id={numberToPerson[imageName]} onClick={this.openModal.bind(this, imageName)}>
-            <img className="flex-image" alt="" id={imageName} src={'/img/' + String(imageName) + '.png'} />
+            <img className="flex-image" alt="" id={imageName} src={require('./../../img/' + String(imageName) + '.png')} />
       </div>)
     })
   }

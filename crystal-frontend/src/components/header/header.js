@@ -10,7 +10,7 @@ const Header = () => (
     <Navbar.Brand className="col-md6 col-md-offset-3" href="#home">
       <img
         alt=""
-        src="img/crystal3.svg"
+        src={require("./../../img/Crystal3.svg")}
         width="75"
         height="75"
         className="d-inline-block align-top"

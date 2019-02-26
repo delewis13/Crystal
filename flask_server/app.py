@@ -1,18 +1,25 @@
 import pickle
-from flask import Flask
+from flask import Flask, render_template
 from flask_cors import CORS
 from flask import request
 from flask import send_from_directory
 from WordEmb2 import WordEmbedder
+from urllib.parse import urlparse
 import pickle
 import personality_predicter
 app = Flask(__name__)
 # cross origin resource sharing
 cors = CORS(app)
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route('/', methods=['GET'])
 def init():
   return 'Welcome'
+
+
+@app.route('/crystal', methods=['GET'])
+def crystal():
+  return render_template('index.html')
 
 
 @app.route('/api/<long_string>', methods=['POST', 'GET'])
@@ -21,8 +28,11 @@ def predict(long_string):
   # ---- Loading the classifier ---
   # print('[+] Loading model!');
   # print();
+  print(long_string)
   classifier = pickle.load(open('xgboost_model.pickle', 'rb'))
   prediction = personality_predicter.predict_personality_from_post(classifier, long_string, wb)
+
+  print(prediction)
 
   return prediction
 
