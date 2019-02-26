@@ -4,7 +4,6 @@ from flask_cors import CORS
 from flask import request
 from flask import send_from_directory
 from WordEmb2 import WordEmbedder
-from urllib.parse import urlparse
 import pickle
 import personality_predicter
 app = Flask(__name__)
@@ -38,4 +37,6 @@ def predict(long_string):
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
+  #app.run(host='0.0.0.0', debug=True)
+  app.run(host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
+  #app.run()
