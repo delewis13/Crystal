@@ -65,7 +65,16 @@ class ActionButton extends Component {
 
       this.props.dispatch(addUserPosts(messagesList))
       console.log(myLongString)
-      fetch('http://localhost:8000/api/myLongString', {
+
+      // Send request to backend
+      const url = window.location.href.split('/')
+      let endpoint = 'api/myLongString'
+      if (url[2].slice(0,9) === "localhost") {
+        endpoint = 'http://localhost:8080/' + endpoint
+      } else if (url[3] === "aiae.ml") {
+        endpoint = 'https://aiae.ml/' + endpoint
+      }
+      fetch(endpoint, {
         method: 'POST'
       }).then((response) => {return response.text()}).then((personality) => {
         let personalityNum = personToNumber[personality];

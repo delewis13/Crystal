@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build-move": "react-scripts build && mv -f ./build/index.html ../flask_server/templates/index.html && mv -f ./build/static/js/ ../flask_server/static/js/ && mv -f ./build/static/css/ ../flask_server/static/css/ && mv -f ./build/static/media ../flask_server/static/media",
-    "build-move-windows": "react-scripts build && rmdir /S /Q ..\\flask_server\\static && mkdir ..\\flask_server\\static && move /Y build\\index.html ..\\flask_server\\templates\\index.html && move /Y build\\static\\js ..\\flask_server\\static\\ && move /Y build\\static\\css ..\\flask_server\\static\\ && move /Y build\\static\\media ..\\flask_server\\static\\",
+    "build-move-windows": "react-scripts build && rmdir /S /Q ..\\flask_server\\static && mkdir ..\\flask_server\\static && move /Y build\\index.html ..\\flask_server\\templates\\index.html && move /Y build\\favicon.ico ..\\flask_server\\templates\\favicon.ico && move /Y build\\static\\js ..\\flask_server\\static\\ && move /Y build\\static\\css ..\\flask_server\\static\\ && move /Y build\\static\\media ..\\flask_server\\static\\",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
