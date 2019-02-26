@@ -71,9 +71,10 @@ class ActionButton extends Component {
       let endpoint = 'api/myLongString'
       if (url[2].slice(0,9) === "localhost") {
         endpoint = 'http://localhost:8080/' + endpoint
-      } else if (url[3] === "aiae.ml") {
+      } else if (url[2] === "aiae.ml") {
         endpoint = 'https://aiae.ml/' + endpoint
       }
+      console.log(`Fetching endpoint ${endpoint}`)
       fetch(endpoint, {
         method: 'POST'
       }).then((response) => {return response.text()}).then((personality) => {
