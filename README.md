@@ -2,6 +2,8 @@
 
 A Myers-Briggs personality predictor based on user social media posts [Facebook / Twitter supported].
 
+See working demo at https://aiae.ml/crystal
+
 # Predictions
 
 Data is sourced from https://www.kaggle.com/datasnaek/mbti-type
