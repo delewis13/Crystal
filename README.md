@@ -2,7 +2,7 @@
 
 A Myers-Briggs personality predictor based on user social media posts [Facebook / Twitter supported].
 
-See working demo at https://aiae.ml/crystal
+See working demo at https://aiae.tk/crystal
 
 # Predictions
 
